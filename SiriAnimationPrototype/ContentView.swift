@@ -15,6 +15,7 @@ struct ContentView: View {
     
     @State var counter: Int = 0
     @State var origin: CGPoint = .init(x: 0.5, y: 0.5)
+    @State var gradientSpeed: Float = 0.03
     
     @State var state: SiriState = .none
     @State var timer: Timer?
@@ -23,14 +24,14 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                MeshGradientView(gradientSpeed: gradientSpeed)
-                    .scaleEffect(1.5) // avoids clipping
+                MeshGradientView(maskTimer: $maskTimer, gradientSpeed: $gradientSpeed)
+                    .scaleEffect(1.3) // avoids clipping
                     .opacity(containerOpacity)
                 
                 if state == .thinking {
                     RoundedRectangle(cornerRadius: 52, style: .continuous)
                         .stroke(Color.white, style: .init(lineWidth: 4))
-                        .blur(radius: 8)
+                        .blur(radius: 4)
                 }
                 
                 PhoneBackground(state: $state, origin: $origin, counter: $counter)
@@ -66,21 +67,14 @@ struct ContentView: View {
     private var rectangleSpeed: Float {
         switch state {
         case .none: return 0
-        case .thinking: return 0.05
-        }
-    }
-    
-    private var gradientSpeed: Float {
-        switch state {
-        case .none: return 0
-        case .thinking: return 0.05
+        case .thinking: return 0.03
         }
     }
     
     private var animatedMaskBlur: CGFloat {
         switch state {
         case .none: return 8
-        case .thinking: return 24
+        case .thinking: return 28
         }
     }
     

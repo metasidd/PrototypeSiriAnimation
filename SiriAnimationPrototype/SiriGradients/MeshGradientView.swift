@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct MeshGradientView: View {
-    @State private var maskTimer: Float = 0.0
-    @State private var gradientSpeed: Float
-
-    init(gradientSpeed: Float) {
-        self._gradientSpeed = State(initialValue: gradientSpeed)
-    }
+    @Binding var maskTimer: Float
+    @Binding var gradientSpeed: Float
 
     var body: some View {
         MeshGradient(width: 3, height: 3, points: [
@@ -48,5 +44,5 @@ struct MeshGradientView: View {
 }
 
 #Preview {
-    MeshGradientView(gradientSpeed: 0.05)
+    MeshGradientView(maskTimer: .constant(0.0), gradientSpeed: .constant(0.05))
 }
