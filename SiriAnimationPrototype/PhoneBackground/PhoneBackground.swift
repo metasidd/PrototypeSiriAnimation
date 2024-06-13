@@ -35,13 +35,13 @@ struct PhoneBackground: View {
             Image("Background", bundle: .main)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .scaleEffect(1.2)
+                .scaleEffect(1.2) // avoids clipping
                 .ignoresSafeArea()
             
             Rectangle()
                 .fill(Color.black)
                 .opacity(scrimOpacity)
-                .scaleEffect(1.2)
+                .scaleEffect(1.2) // avoids clipping
             
             VStack {
                 welcomeText
@@ -62,12 +62,12 @@ struct PhoneBackground: View {
     @ViewBuilder
     private var welcomeText: some View {
         if state == .thinking {
-            Text("Hello @metasidd!")
+            Text("What are you looking for?")
                 .foregroundStyle(Color.white)
-                .frame(maxWidth: 200, maxHeight: .infinity, alignment: .center)
+                .frame(maxWidth: 240, maxHeight: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
-                .font(.title)
-                .fontWeight(.black)
+                .font(.largeTitle)
+                .fontWeight(.bold)
                 .animation(.easeInOut(duration: 0.2), value: state)
                 .contentTransition(.opacity)
         }
