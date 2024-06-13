@@ -18,6 +18,7 @@ struct ContentView: View {
                 
                 AnimatedRectangle(proxy: geometry, cornerRadius: 48)
                     .frame(width: geometry.size.width, height: geometry.size.height)
+                    .blur(radius: 12)
 
                 //            phoneBackground
                 //                .mask(phoneMask.blur(radius: 8))
