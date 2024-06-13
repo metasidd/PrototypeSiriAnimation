@@ -16,10 +16,13 @@ struct ContentView: View {
         GeometryReader { geometry in
             ZStack {
                 meshGradient
-                    .mask(
+                    .blur(radius: 8)
+                
+                phoneBackground
+                    .mask {
                         animatedRectanle(proxy: geometry, t: CGFloat(t))
-                            .blur(radius: 8)
-                    )
+                            .blur(radius: 16)
+                    }
             }
         }
         .ignoresSafeArea()
@@ -32,13 +35,13 @@ struct ContentView: View {
     
     private var phoneBackground: some View {
         RoundedRectangle(cornerRadius: 24, style: .continuous)
+            .fill(Color.white)
             .ignoresSafeArea()
     }
 
     private var phoneMask: some View {
         RoundedRectangle(cornerRadius: 49, style: .continuous)
             .fill(Color.white)
-            .padding(4)
             .ignoresSafeArea()
     }
     
@@ -92,64 +95,82 @@ struct AnimatedRectangle: Shape {
         let padding: CGFloat = 16
         let radius = cornerRadius
 
+        // Define the initial points
         let initialPoints = [
-           CGPoint(x: 0 + padding, y: 0 + padding),
-           CGPoint(x: 0 + padding + radius, y: 0 + padding),
-           CGPoint(x: width * 0.25 + padding, y: 0 + padding),
-           CGPoint(x: width * 0.75 + padding, y: 0 + padding),
-           CGPoint(x: width - padding - radius, y: 0 + padding),
-           CGPoint(x: width - padding, y: 0 + padding),
-           CGPoint(x: width - padding, y: 0 + padding + radius),
-           CGPoint(x: width - padding, y: height * 0.25 - padding),
-           CGPoint(x: width - padding, y: height * 0.75 - padding),
-           CGPoint(x: width - padding, y: height - padding),
-           CGPoint(x: width - padding - radius, y: height - padding),
-           CGPoint(x: width * 0.75 - padding, y: height - padding),
-           CGPoint(x: width * 0.25 - padding, y: height - padding),
-           CGPoint(x: 0 + padding, y: height - padding),
-           CGPoint(x: 0 + padding, y: height * 0.75 - padding),
-           CGPoint(x: 0 + padding, y: height * 0.25 - padding)
-       ]
+            CGPoint(x: padding + radius, y: padding),
+            CGPoint(x: width * 0.25 + padding, y: padding),
+            CGPoint(x: width * 0.75 + padding, y: padding),
+            CGPoint(x: width - padding - radius, y: padding),
+            CGPoint(x: width - padding, y: padding + radius),
+            CGPoint(x: width - padding, y: height * 0.25 - padding),
+            CGPoint(x: width - padding, y: height * 0.75 - padding),
+            CGPoint(x: width - padding, y: height - padding - radius),
+            CGPoint(x: width - padding - radius, y: height - padding),
+            CGPoint(x: width * 0.75 - padding, y: height - padding),
+            CGPoint(x: width * 0.25 - padding, y: height - padding),
+            CGPoint(x: padding + radius, y: height - padding),
+            CGPoint(x: padding, y: height - padding - radius),
+            CGPoint(x: padding, y: height * 0.75 - padding),
+            CGPoint(x: padding, y: height * 0.25 - padding),
+            CGPoint(x: padding, y: padding + radius)
+        ]
 
-       // Step 2: Map the points to their animated positions
-       let points = initialPoints.map { point in
-           CGPoint(
-               x: point.x + 10 * sin(t + point.y * 0.01),
-               y: point.y + 10 * sin(t + point.x * 0.01)
-           )
-       }
+        // Define the arc centers
+        let initialArcCenters = [
+            CGPoint(x: padding + radius, y: padding + radius), // Top-left
+            CGPoint(x: width - padding - radius, y: padding + radius), // Top-right
+            CGPoint(x: width - padding - radius, y: height - padding - radius), // Bottom-right
+            CGPoint(x: padding + radius, y: height - padding - radius) // Bottom-left
+        ]
 
-        path.move(to: points[0])
+        // Animate the points
+        let points = initialPoints.map { point in
+            CGPoint(
+                x: point.x + 10 * sin(t + point.y * 0.2),
+                y: point.y + 10 * sin(t + point.x * 0.2)
+            )
+        }
+
+        // Animate the arc centers
+        let arcCenters = initialArcCenters.map { center in
+            CGPoint(
+                x: center.x + 10 * sin(t + center.y * 0.01),
+                y: center.y + 10 * sin(t + center.x * 0.01)
+            )
+        }
+
+        // Draw the path
+        path.move(to: CGPoint(x: padding, y: padding + radius))
 
         // Top-left corner
-        path.addArc(center: CGPoint(x: padding + radius, y: padding + radius), radius: radius, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
+        path.addArc(center: arcCenters[0], radius: radius, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
 
         // Top edge
-        for point in points[2...5] {
+        for point in points[0...2] {
             path.addLine(to: point)
         }
 
         // Top-right corner
-        path.addArc(center: CGPoint(x: width - padding - radius, y: padding + radius), radius: radius, startAngle: .degrees(270), endAngle: .degrees(0), clockwise: false)
+        path.addArc(center: arcCenters[1], radius: radius, startAngle: .degrees(270), endAngle: .degrees(0), clockwise: false)
 
         // Right edge
-        for point in points[7...9] {
+        for point in points[4...7] {
             path.addLine(to: point)
         }
 
         // Bottom-right corner
-        path.addArc(center: CGPoint(x: width - padding - radius, y: height - padding - radius), radius: radius, startAngle: .degrees(0), endAngle: .degrees(90), clockwise: false)
+        path.addArc(center: arcCenters[2], radius: radius, startAngle: .degrees(0), endAngle: .degrees(90), clockwise: false)
 
         // Bottom edge
-        for point in points[11...14] {
+        for point in points[8...10] {
             path.addLine(to: point)
         }
 
         // Bottom-left corner
-        path.addArc(center: CGPoint(x: padding + radius, y: height - padding - radius), radius: radius, startAngle: .degrees(90), endAngle: .degrees(180), clockwise: false)
+        path.addArc(center: arcCenters[3], radius: radius, startAngle: .degrees(90), endAngle: .degrees(180), clockwise: false)
 
         // Left edge
-        for point in points[16...] {
+        for point in points[11...14] {
             path.addLine(to: point)
         }
 
