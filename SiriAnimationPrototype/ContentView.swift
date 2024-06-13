@@ -16,41 +16,6 @@ struct ContentView: View {
     @State var state: SiriState = .none
     @State var timer: Timer?
     @State private var maskTimer: Float = 0.0
-    
-    private var computedScale: CGFloat {
-        switch state {
-        case .none: return 1.1
-        case .thinking: return 1
-        }
-    }
-    
-    private var rectangleSpeed: Float {
-        switch state {
-        case .none: return 0
-        case .thinking: return 0.05
-        }
-    }
-    
-    private var gradientSpeed: Float {
-        switch state {
-        case .none: return 0
-        case .thinking: return 0.05
-        }
-    }
-    
-    private var animatedMaskBlur: CGFloat {
-        switch state {
-        case .none: return 8
-        case .thinking: return 24
-        }
-    }
-    
-    private var containerOpacity: CGFloat {
-        switch state {
-        case .none: return 0
-        case .thinking: return 1.0
-        }
-    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -108,6 +73,41 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 16.0, style: .continuous)
                         .fill(Color.gray.opacity(0.1))
                 )
+        }
+    }
+    
+    private var computedScale: CGFloat {
+        switch state {
+        case .none: return 1.1
+        case .thinking: return 1
+        }
+    }
+    
+    private var rectangleSpeed: Float {
+        switch state {
+        case .none: return 0
+        case .thinking: return 0.05
+        }
+    }
+    
+    private var gradientSpeed: Float {
+        switch state {
+        case .none: return 0
+        case .thinking: return 0.05
+        }
+    }
+    
+    private var animatedMaskBlur: CGFloat {
+        switch state {
+        case .none: return 8
+        case .thinking: return 24
+        }
+    }
+    
+    private var containerOpacity: CGFloat {
+        switch state {
+        case .none: return 0
+        case .thinking: return 1.0
         }
     }
 }
