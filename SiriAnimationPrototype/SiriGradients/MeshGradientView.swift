@@ -22,9 +22,9 @@ struct MeshGradientView: View {
             [sinInRange(0.3...0.6, offset: 0.339, timeScale: 0.784, t: maskTimer), sinInRange(1.0...1.2, offset: 1.22, timeScale: 0.772, t: maskTimer)],
             [sinInRange(1.0...1.5, offset: 0.939, timeScale: 0.056, t: maskTimer), sinInRange(1.3...1.7, offset: 0.47, timeScale: 0.342, t: maskTimer)]
         ], colors: [
-            .green, .purple, .indigo,
+            .yellow, .purple, .indigo,
             .orange, .red, .blue,
-            .yellow, .green, .mint
+            .indigo, .green, .mint
         ])
         .onAppear {
             Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in

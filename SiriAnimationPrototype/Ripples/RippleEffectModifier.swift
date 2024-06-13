@@ -52,7 +52,7 @@ struct RippleModifier: ViewModifier {
     var amplitude: Double = 12
     var frequency: Double = 15
     var decay: Double = 8
-    var speed: Double = 1200
+    var speed: Double = 2000
 
     func body(content: Content) -> some View {
         let shader = ShaderLibrary.Ripple(
