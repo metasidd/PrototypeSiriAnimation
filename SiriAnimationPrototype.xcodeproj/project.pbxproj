@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0A5A952C1AF77700B6680C /* AnimatedPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0A5A942C1AF77000B6680C /* AnimatedPath.swift */; };
 		2CA92B5C2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA92B5B2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift */; };
 		2CA92B5E2C1AE48E00EE3AFE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA92B5D2C1AE48E00EE3AFE /* ContentView.swift */; };
 		2CA92B602C1AE48E00EE3AFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CA92B5F2C1AE48E00EE3AFE /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C0A5A942C1AF77000B6680C /* AnimatedPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedPath.swift; sourceTree = "<group>"; };
 		2CA92B582C1AE48E00EE3AFE /* SiriAnimationPrototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SiriAnimationPrototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CA92B5B2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriAnimationPrototypeApp.swift; sourceTree = "<group>"; };
 		2CA92B5D2C1AE48E00EE3AFE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,8 +53,9 @@
 		2CA92B5A2C1AE48E00EE3AFE /* SiriAnimationPrototype */ = {
 			isa = PBXGroup;
 			children = (
-				2CA92B5B2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift */,
 				2CA92B5D2C1AE48E00EE3AFE /* ContentView.swift */,
+				2C0A5A942C1AF77000B6680C /* AnimatedPath.swift */,
+				2CA92B5B2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift */,
 				2CA92B5F2C1AE48E00EE3AFE /* Assets.xcassets */,
 				2CA92B612C1AE48E00EE3AFE /* Preview Content */,
 			);
@@ -139,6 +142,7 @@
 			files = (
 				2CA92B5E2C1AE48E00EE3AFE /* ContentView.swift in Sources */,
 				2CA92B5C2C1AE48E00EE3AFE /* SiriAnimationPrototypeApp.swift in Sources */,
+				2C0A5A952C1AF77700B6680C /* AnimatedPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
