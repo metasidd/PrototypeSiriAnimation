@@ -13,7 +13,10 @@ struct ContentView: View {
         case thinking
     }
     
-    @State var state: SiriState = .none
+    @State var counter: Int = 0
+    @State var origin: CGPoint = .init(x: 0.5, y: 0.5)
+    
+    @State var state: SiriState = .thinking
     @State var timer: Timer?
     @State private var maskTimer: Float = 0.0
 
@@ -24,7 +27,11 @@ struct ContentView: View {
                     .scaleEffect(1.5) // avoids masks clipping
                     .opacity(containerOpacity)
                 
-                phoneBackground
+                RoundedRectangle(cornerRadius: 52, style: .continuous)
+                    .stroke(Color.white, style: .init(lineWidth: 4))
+                    .blur(radius: 8)
+                
+                PhoneBackground(state: $state, origin: $origin, counter: $counter)
                     .mask {
                         AnimatedRectangle(size: geometry.size, cornerRadius: 48, t: CGFloat(maskTimer))
                             .scaleEffect(computedScale)
@@ -34,6 +41,7 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
+        .modifier(RippleEffect(at: origin, trigger: counter))
         .onAppear {
             timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
                 DispatchQueue.main.async {
@@ -43,36 +51,6 @@ struct ContentView: View {
         }
         .onDisappear {
             timer?.invalidate()
-        }
-    }
-    
-    private var phoneBackground: some View {
-        VStack {
-            siriButton(text: "Start", action: {
-                self.state = .thinking
-            })
-            siriButton(text: "Stop", action: {
-                self.state = .none
-            })
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .background(Color.white)
-    }
-    
-    private func siriButton(text: String, action: @escaping () -> Void) -> some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.9)) {
-                action()
-            }
-        } label: {
-            Text(text)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .font(.system(.body, design: .monospaced))
-                .background(
-                    RoundedRectangle(cornerRadius: 16.0, style: .continuous)
-                        .fill(Color.gray.opacity(0.1))
-                )
         }
     }
     
